@@ -53,26 +53,123 @@ alter table settings enable row level security;
 alter table orders enable row level security;
 alter table order_items enable row level security;
 
-create policy if not exists products_read_public on products
-  for select using (true);
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1
+    FROM pg_policies
+    WHERE schemaname = 'public'
+      AND tablename = 'products'
+      AND policyname = 'products_read_public'
+  ) THEN
+    CREATE POLICY products_read_public ON public.products
+      FOR SELECT
+      USING (true);
+  END IF;
+END $$;
 
-create policy if not exists categories_read_public on categories
-  for select using (true);
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1
+    FROM pg_policies
+    WHERE schemaname = 'public'
+      AND tablename = 'categories'
+      AND policyname = 'categories_read_public'
+  ) THEN
+    CREATE POLICY categories_read_public ON public.categories
+      FOR SELECT
+      USING (true);
+  END IF;
+END $$;
 
-create policy if not exists settings_read_public on settings
-  for select using (true);
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1
+    FROM pg_policies
+    WHERE schemaname = 'public'
+      AND tablename = 'settings'
+      AND policyname = 'settings_read_public'
+  ) THEN
+    CREATE POLICY settings_read_public ON public.settings
+      FOR SELECT
+      USING (true);
+  END IF;
+END $$;
 
-create policy if not exists settings_write_public on settings
-  for all using (true) with check (true);
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1
+    FROM pg_policies
+    WHERE schemaname = 'public'
+      AND tablename = 'settings'
+      AND policyname = 'settings_write_public'
+  ) THEN
+    CREATE POLICY settings_write_public ON public.settings
+      FOR ALL
+      USING (true)
+      WITH CHECK (true);
+  END IF;
+END $$;
 
-create policy if not exists orders_insert_public on orders
-  for insert with check (true);
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1
+    FROM pg_policies
+    WHERE schemaname = 'public'
+      AND tablename = 'orders'
+      AND policyname = 'orders_insert_public'
+  ) THEN
+    CREATE POLICY orders_insert_public ON public.orders
+      FOR INSERT
+      WITH CHECK (true);
+  END IF;
+END $$;
 
-create policy if not exists orders_select_public on orders
-  for select using (true);
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1
+    FROM pg_policies
+    WHERE schemaname = 'public'
+      AND tablename = 'orders'
+      AND policyname = 'orders_select_public'
+  ) THEN
+    CREATE POLICY orders_select_public ON public.orders
+      FOR SELECT
+      USING (true);
+  END IF;
+END $$;
 
-create policy if not exists order_items_insert_public on order_items
-  for insert with check (true);
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1
+    FROM pg_policies
+    WHERE schemaname = 'public'
+      AND tablename = 'order_items'
+      AND policyname = 'order_items_insert_public'
+  ) THEN
+    CREATE POLICY order_items_insert_public ON public.order_items
+      FOR INSERT
+      WITH CHECK (true);
+  END IF;
+END $$;
 
-create policy if not exists order_items_select_public on order_items
-  for select using (true);
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1
+    FROM pg_policies
+    WHERE schemaname = 'public'
+      AND tablename = 'order_items'
+      AND policyname = 'order_items_select_public'
+  ) THEN
+    CREATE POLICY order_items_select_public ON public.order_items
+      FOR SELECT
+      USING (true);
+  END IF;
+END $$;

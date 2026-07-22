@@ -1,4 +1,4 @@
-import { Coin, Package, Layers, ShoppingCart } from 'lucide-react'
+import { Coins, Package, Layers, ShoppingCart } from 'lucide-react'
 import StatCard from './StatCard'
 
 type Props = {
@@ -12,7 +12,7 @@ export default function DashboardStats({ revenue, products, categories, orders }
   return (
     <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 xl:grid-cols-4">
       <StatCard
-        icon={<Coin size={20} />}
+        icon={<Coins size={20} />}
         title={revenue}
         subtitle="Revenue"
         value={revenue}

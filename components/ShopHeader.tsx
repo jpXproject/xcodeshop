@@ -4,7 +4,15 @@ import { ShoppingCart, Sparkles } from "lucide-react"
 import { useCart } from "./CartProvider"
 import Link from "next/link"
 
-export default function ShopHeader() {
+export default function ShopHeader({
+  logoUrl,
+  storeName,
+  sourceHeader,
+}: {
+  logoUrl?: string
+  storeName?: string
+  sourceHeader?: string
+}) {
   const { items, setOpen } = useCart()
   const quantity = items.reduce((sum, item) => sum + item.quantity, 0)
 
@@ -13,11 +21,15 @@ export default function ShopHeader() {
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
         <div className="flex items-center gap-3">
           <div className="flex h-12 w-12 items-center justify-center rounded-3xl bg-slate-900/90 text-sky-300 shadow-[inset_2px_2px_8px_rgba(255,255,255,0.03)]">
-            <Sparkles className="h-6 w-6" />
+            {logoUrl ? (
+              <img src={logoUrl} alt="Logo toko" className="h-10 w-10 rounded-2xl object-contain" />
+            ) : (
+              <Sparkles className="h-6 w-6" />
+            )}
           </div>
           <div>
-            <p className="text-xs uppercase tracking-[0.35em] text-slate-400">XShop Roblox</p>
-            <p className="text-lg font-semibold text-white">Market place</p>
+            <p className="text-xs uppercase tracking-[0.35em] text-slate-400">{sourceHeader || 'XShop Roblox'}</p>
+            <p className="text-lg font-semibold text-white">{storeName || 'Marketplace'}</p>
           </div>
         </div>
 

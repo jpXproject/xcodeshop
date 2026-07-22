@@ -1,5 +1,5 @@
 import StatCard from './StatCard'
-import { Coin, Package, Layers, ShoppingCart } from 'lucide-react'
+import { Coins, Package, Layers, ShoppingCart } from 'lucide-react'
 
 type SeriesPoint = { x: number | string; y: number }
 
@@ -10,7 +10,7 @@ export default function StatsGrid() {
   return (
     <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
       <StatCard
-        icon={<Coin size={20} />}
+        icon={<Coins size={20} />}
         title="Rp 236.227.750"
         subtitle="Revenue"
         value="Rp 236.2M"

@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { AnimatePresence, motion } from 'framer-motion'
+import { useState } from 'react'
 import {
   LayoutDashboard,
   Package,
@@ -14,7 +14,7 @@ import {
   ShoppingBag,
   FileText,
   BarChart3,
-  FileChart,
+  FilePieChart,
   ChevronDown,
   ChevronRight,
   Sparkles,
@@ -48,14 +48,14 @@ const menuSections: NavItem[] = [
   {
     name: 'Analytics',
     icon: BarChart3,
-    children: [{ name: 'Reports', href: '/admin/reports', icon: FileChart }],
+    children: [{ name: 'Reports', href: '/admin/reports', icon: FilePieChart }],
   },
   { name: 'Settings', href: '/admin/settings', icon: Settings },
 ]
 
 export default function Sidebar({ collapsed }: Props) {
   const pathname = usePathname()
-  const [openSections, setOpenSections] = React.useState<Record<string, boolean>>({
+  const [openSections, setOpenSections] = useState<Record<string, boolean>>({
     Catalog: true,
     Analytics: false,
   })
@@ -122,33 +122,24 @@ export default function Sidebar({ collapsed }: Props) {
                   )}
                 </div>
 
-                {hasChildren && (
-                  <AnimatePresence initial={false}>
-                    {openSections[section.name] && !collapsed ? (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        className="overflow-hidden"
-                      >
-                        <div className="mt-2 space-y-2 rounded-2xl border border-white/6 bg-slate-950/80 p-2">
-                          {section.children!.map((child) => (
-                            <Link
-                              key={child.href}
-                              href={child.href}
-                              className={`flex items-center gap-3 rounded-2xl px-3 py-2 text-sm transition duration-300 ${
-                                isActiveItem(child.href) ? 'bg-slate-800 text-white' : 'text-slate-300 hover:bg-slate-800/40 hover:text-white'
-                              }`}
-                            >
-                              <child.icon size={16} className="text-slate-400" />
-                              <span>{child.name}</span>
-                            </Link>
-                          ))}
-                        </div>
-                      </motion.div>
-                    ) : null}
-                  </AnimatePresence>
-                )}
+                {hasChildren && openSections[section.name] && !collapsed ? (
+                  <div className="overflow-hidden transition-all duration-300">
+                    <div className="mt-2 space-y-2 rounded-2xl border border-white/6 bg-slate-950/80 p-2">
+                      {section.children!.map((child) => (
+                        <Link
+                          key={child.href}
+                          href={child.href}
+                          className={`flex items-center gap-3 rounded-2xl px-3 py-2 text-sm transition duration-300 ${
+                            isActiveItem(child.href) ? 'bg-slate-800 text-white' : 'text-slate-300 hover:bg-slate-800/40 hover:text-white'
+                          }`}
+                        >
+                          <child.icon size={16} className="text-slate-400" />
+                          <span>{child.name}</span>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                ) : null}
               </div>
             )
           })}

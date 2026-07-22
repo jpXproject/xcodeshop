@@ -23,13 +23,19 @@ export default async function ProductsPage() {
     .order('name')
 
   return (
-    <div>
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Manajemen Produk</h1>
-        <AddProductForm categories={categories || []} />
+    <div className="space-y-6">
+      <div className="rounded-[28px] border border-white/10 bg-slate-950/80 p-6 shadow-[12px_12px_40px_rgba(0,0,0,0.45)]">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="text-sm uppercase tracking-[0.3em] text-sky-300">Admin Produk</p>
+            <h1 className="mt-2 text-3xl font-bold text-white">Manajemen Produk</h1>
+            <p className="mt-2 max-w-2xl text-sm text-slate-400">Kelola produk, kategori, stok, status, dan impor/ekspor dalam satu dashboard yang cepat dan modern.</p>
+          </div>
+          <AddProductForm categories={categories || []} />
+        </div>
       </div>
 
-      <div className="bg-white rounded-lg shadow overflow-hidden">
+      <div className="overflow-hidden rounded-[32px] border border-white/10 bg-slate-950/80 shadow-[0_24px_80px_rgba(0,0,0,0.45)]">
         <ProductList products={products || []} categories={categories || []} />
       </div>
     </div>

@@ -26,11 +26,24 @@ export default async function HomePage() {
     .eq('is_active', true)
     .order('created_at', { ascending: false })
 
+  const { data: settings } = await supabase
+    .from('settings')
+    .select('store_name, source_header, logo_url, hero_image_url, store_contact')
+    .single()
+
   return (
     <main className="min-h-screen bg-[radial-gradient(circle_at_top_left,_#0b1220,_#020617_65%)] text-slate-100">
-      <ShopHeader />
+      <ShopHeader
+        logoUrl={settings?.logo_url}
+        storeName={settings?.store_name}
+        sourceHeader={settings?.source_header}
+      />
       <div className="mx-auto flex max-w-7xl flex-col gap-10 px-4 py-6 sm:px-6 lg:px-8">
-        <HeroSection />
+        <HeroSection
+          sourceHeader={settings?.source_header}
+          heroImageUrl={settings?.hero_image_url}
+          storeName={settings?.store_name}
+        />
         <TrustPanel />
 
         <section id="products" className="space-y-6">

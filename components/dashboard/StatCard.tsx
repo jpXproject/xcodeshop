@@ -1,7 +1,6 @@
 "use client"
 
 import { ReactNode } from 'react'
-import { motion } from 'framer-motion'
 import { LineChart, Line, ResponsiveContainer } from 'recharts'
 
 type SeriesPoint = { x: number | string; y: number }
@@ -20,11 +19,7 @@ export default function StatCard({ icon, title, subtitle, value, growth = 0, dat
   const growthPositive = growth >= 0
 
   return (
-    <motion.div
-      whileHover={{ scale: 1.02 }}
-      transition={{ duration: 0.3 }}
-      className={`rounded-xl border border-white/6 bg-slate-900/60 p-4 shadow-sm ${className}`}
-    >
+    <div className={`rounded-xl border border-white/6 bg-slate-900/60 p-4 shadow-sm transition-transform duration-300 hover:scale-[1.02] ${className}`}>
       <div className="flex items-start justify-between gap-4">
         <div className="flex items-center gap-3">
           <div className="rounded-lg bg-slate-800/60 p-2 text-sky-300">{icon}</div>
@@ -47,6 +42,6 @@ export default function StatCard({ icon, title, subtitle, value, growth = 0, dat
           </LineChart>
         </ResponsiveContainer>
       </div>
-    </motion.div>
+    </div>
   )
 }

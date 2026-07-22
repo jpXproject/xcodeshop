@@ -1,36 +1,62 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# XShop Roblox
 
-## Getting Started
+XShop Roblox adalah toko online untuk item Roblox yang dirancang dengan tema gelap modern, UX belanja yang fokus, dan checkout sederhana. Situs ini menampilkan katalog produk, trust panel, quick add-to-cart, sticky cart drawer, dan footer profesional.
 
-First, run the development server:
+## Fitur Utama
+
+- Hero section dengan ajakan beli yang jelas
+- Trust panel untuk meningkatkan kepercayaan pembeli
+- Kartu produk dengan detail singkat, badge kategori, dan quick buy
+- Cart drawer persistent untuk pengalaman belanja yang lancar
+- Sticky header dengan ikon keranjang dan jumlah item
+- Footer profesional dengan tautan bantuan dan kontak
+
+## Struktur Proyek
+
+- `app/page.tsx` - halaman beranda toko publik
+- `app/layout.tsx` - layout root termasuk `CartProvider`
+- `components/ShopHeader.tsx` - sticky header toko
+- `components/HeroSection.tsx` - hero section utama
+- `components/TrustPanel.tsx` - panel kepercayaan
+- `components/ProductCard.tsx` - kartu produk modern
+- `components/CartProvider.tsx` - context keranjang belanja
+- `components/CartDrawer.tsx` - drawer keranjang slide-out
+- `components/Footer.tsx` - footer profesional
+
+## Menjalankan Proyek
+
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Jalankan server development:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. Buka aplikasi di browser:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Build Production
 
-## Learn More
+```bash
+npm run build
+npm start
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Deploy
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Proyek ini cocok untuk deploy di Vercel. Pastikan environment variable Supabase diatur di dashboard Vercel sebelum deploy.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 
-## Deploy on Vercel
+## Catatan
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Situs toko sudah disederhanakan dengan fokus pada pengalaman pembeli dan antarmuka yang ramping. Halaman admin masih tersedia secara terpisah, sementara homepage publik tetap menampilkan branding, produk, dan fitur checkout inti.

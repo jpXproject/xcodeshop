@@ -16,6 +16,16 @@ export default async function AdminDashboard() {
     supabase.from('categories').select('id', { count: 'exact' }),
     supabase.from('settings').select('id', { count: 'exact' }),
   ])
+  
+  // load some recent products to show in the dashboard table
+  const { data: productsData } = await supabase
+    .from('products')
+    .select('id, name, category, price, stock, status, image_url')
+    .order('created_at', { ascending: false })
+    .limit(10)
+
+  // load settings (to read dashboard illustration url if available)
+  const { data: settingsData } = await supabase.from('settings').select('*').maybeSingle()
 
   return (
     <div className="space-y-8">
@@ -26,7 +36,11 @@ export default async function AdminDashboard() {
             <h1 className="text-3xl font-bold text-white">Ringkasan Toko</h1>
           </div>
           <div className="flex items-center gap-4">
-            <img src="/assets/admin-dashboard.png" alt="Ilustrasi dashboard" className="hidden lg:block h-28 w-auto rounded-lg object-cover shadow-[0_10px_30px_rgba(34,211,238,0.08)]" />
+            <img
+              src={settingsData?.dashboard_illustration_url || settingsData?.hero_image_url || '/assets/admin-dashboard.png'}
+              alt="Ilustrasi dashboard"
+              className="hidden lg:block h-28 w-auto rounded-lg object-cover shadow-[0_10px_30px_rgba(34,211,238,0.08)]"
+            />
             <div className="flex flex-wrap gap-3">
               <Link href="/admin/products" className="rounded-full bg-gradient-to-br from-slate-800/80 to-slate-700/70 px-4 py-2 text-sm font-semibold text-white transition hover:from-sky-500/80">
                 Produk
@@ -94,25 +108,27 @@ export default async function AdminDashboard() {
                   </tr>
                 </thead>
                 <tbody className="text-sm">
-                  {/* Placeholder rows - product list component can replace this */}
-                  <tr className="border-t border-white/6">
-                    <td className="px-4 py-3 text-slate-300">1</td>
-                    <td className="px-4 py-3 text-slate-300">Wireless Headphones</td>
-                    <td className="px-4 py-3 text-slate-300">Electronics</td>
-                    <td className="px-4 py-3 text-slate-300">Rp 1.860.000,00</td>
-                    <td className="px-4 py-3 text-slate-300">45</td>
-                    <td className="px-4 py-3"><span className="inline-block rounded-full bg-emerald-600/20 px-2 py-1 text-emerald-300 text-xs">In Stock</span></td>
-                    <td className="px-4 py-3 text-slate-300">•••</td>
-                  </tr>
-                  <tr className="border-t border-white/6">
-                    <td className="px-4 py-3 text-slate-300">2</td>
-                    <td className="px-4 py-3 text-slate-300">Graphic T-Shirt</td>
-                    <td className="px-4 py-3 text-slate-300">Apparel</td>
-                    <td className="px-4 py-3 text-slate-300">Rp 540.000,00</td>
-                    <td className="px-4 py-3 text-slate-300">112</td>
-                    <td className="px-4 py-3"><span className="inline-block rounded-full bg-emerald-600/20 px-2 py-1 text-amber-300 text-xs">In Stock</span></td>
-                    <td className="px-4 py-3 text-slate-300">•••</td>
-                  </tr>
+                  {Array.isArray(productsData) && productsData.length > 0 ? (
+                    productsData.map((p: any) => (
+                      <tr key={p.id} className="border-t border-white/6">
+                        <td className="px-4 py-3 text-slate-300">{p.id}</td>
+                        <td className="px-4 py-3 text-slate-300">{p.name}</td>
+                        <td className="px-4 py-3 text-slate-300">{p.category}</td>
+                        <td className="px-4 py-3 text-slate-300">{p.price}</td>
+                        <td className="px-4 py-3 text-slate-300">{p.stock}</td>
+                        <td className="px-4 py-3">
+                          <span className={`inline-block rounded-full px-2 py-1 text-xs ${p.stock > 0 ? 'bg-emerald-600/20 text-emerald-300' : 'bg-rose-600/20 text-rose-300'}`}>
+                            {p.stock > 0 ? 'In Stock' : 'Out of Stock'}
+                          </span>
+                        </td>
+                        <td className="px-4 py-3 text-slate-300">•••</td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan={7} className="px-4 py-6 text-center text-slate-400">Belum ada produk</td>
+                    </tr>
+                  )}
                 </tbody>
               </table>
             </div>

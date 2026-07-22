@@ -6,7 +6,10 @@ XShop Roblox adalah toko online untuk item Roblox yang dirancang dengan tema gel
 
 - Hero section dengan ajakan beli yang jelas
 - Trust panel untuk meningkatkan kepercayaan pembeli
+- Pencarian produk dan filter kategori untuk menemukan item lebih cepat
 - Kartu produk dengan detail singkat, badge kategori, dan quick buy
+- Halaman detail produk individual untuk setiap item
+- Checkout UX lengkap dengan ringkasan pesanan dan konfirmasi pesanan
 - Cart drawer persistent untuk pengalaman belanja yang lancar
 - Sticky header dengan ikon keranjang dan jumlah item
 - Footer profesional dengan tautan bantuan dan kontak

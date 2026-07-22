@@ -2,7 +2,7 @@ import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 import HeroSection from '../components/HeroSection'
 import TrustPanel from '../components/TrustPanel'
-import ProductCard from '../components/ProductCard'
+import ProductGrid from '../components/ProductGrid'
 import ShopHeader from '../components/ShopHeader'
 import Footer from '../components/Footer'
 
@@ -45,11 +45,19 @@ export default async function HomePage() {
           </div>
 
           {products && products.length > 0 ? (
-            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-              {products.map((product: any) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
+            <ProductGrid
+              initialProducts={products}
+              categories={[
+                'All',
+                ...Array.from(
+                  new Set(
+                    products
+                      .map((product: any) => product.categories?.name)
+                      .filter(Boolean)
+                  )
+                ),
+              ]}
+            />
           ) : (
             <div className="rounded-[24px] border border-dashed border-white/10 bg-slate-900/60 p-10 text-center text-slate-400">
               Belum ada produk aktif yang tersedia saat ini.

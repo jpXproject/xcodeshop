@@ -53,7 +53,7 @@ export default function CartDrawer() {
           <span>Rp {total.toLocaleString()}</span>
         </div>
         <div className="mt-4 flex gap-2">
-          <Link href={items.length ? `/checkout?product=${items[0].id}` : `/`} className="flex-1 rounded-full bg-emerald-500 px-4 py-3 text-center font-semibold text-black">
+          <Link href={items.length ? `/checkout` : `/`} className="flex-1 rounded-full bg-emerald-500 px-4 py-3 text-center font-semibold text-black">
             Checkout
           </Link>
           <button onClick={() => clear()} className="rounded-full border border-white/10 px-4 py-3 text-sm text-slate-300">

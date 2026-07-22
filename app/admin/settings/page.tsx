@@ -8,7 +8,6 @@ type SettingsPayload = {
   source_header?: string
   logo_url?: string
   hero_image_url?: string
-  dashboard_illustration_url?: string
 }
 
 export default function GeneralSettings() {
@@ -17,7 +16,6 @@ export default function GeneralSettings() {
   const [sourceHeader, setSourceHeader] = useState('')
   const [logoUrl, setLogoUrl] = useState('')
   const [heroImageUrl, setHeroImageUrl] = useState('')
-  const [dashboardImageUrl, setDashboardImageUrl] = useState('')
   const [loading, setLoading] = useState(false)
   const [settingsId, setSettingsId] = useState<string | null>(null)
   const supabase = createClient()
@@ -35,26 +33,6 @@ export default function GeneralSettings() {
       setSourceHeader(data.source_header || '')
       setLogoUrl(data.logo_url || '')
       setHeroImageUrl(data.hero_image_url || '')
-      setDashboardImageUrl(data.dashboard_illustration_url || '')
-    }
-  }
-
-  const handleDashboardUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (!file) return
-    try {
-      setLoading(true)
-      const filePath = `dashboard-illustration-${Date.now()}-${file.name}`
-      const { data: uploadData, error: uploadError } = await supabase.storage.from('assets').upload(filePath, file, { upsert: true })
-      if (uploadError) throw uploadError
-      const { data: publicData } = await supabase.storage.from('assets').getPublicUrl(uploadData.path)
-      const publicUrl = publicData?.publicUrl || ''
-      setDashboardImageUrl(publicUrl)
-    } catch (err: any) {
-      console.error(err)
-      alert('Gagal upload gambar: ' + (err?.message || err))
-    } finally {
-      setLoading(false)
     }
   }
 
@@ -68,7 +46,6 @@ export default function GeneralSettings() {
       source_header: sourceHeader,
       logo_url: logoUrl,
       hero_image_url: heroImageUrl,
-      dashboard_illustration_url: dashboardImageUrl,
     }
 
     const response = settingsId
@@ -145,15 +122,7 @@ export default function GeneralSettings() {
             />
             {heroImageUrl && <img src={heroImageUrl} alt="Hero preview" className="mt-3 h-36 w-full rounded-2xl object-cover" />}
           </div>
-          <div>
-            <label className="mb-2 block text-sm font-medium text-slate-300">Dashboard Illustration</label>
-            <input type="file" accept="image/*" onChange={handleDashboardUpload} className="w-full rounded-2xl" />
-            {dashboardImageUrl ? (
-              <img src={dashboardImageUrl} alt="Dashboard preview" className="mt-3 h-36 w-full rounded-2xl object-cover" />
-            ) : (
-              <p className="mt-3 text-sm text-slate-400">Belum ada ilustrasi dashboard. Unggah untuk menampilkannya di dashboard admin.</p>
-            )}
-          </div>
+          {/* dashboard illustration removed — reference image was only a design reference */}
         </div>
 
         <button

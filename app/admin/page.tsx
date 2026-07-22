@@ -24,8 +24,7 @@ export default async function AdminDashboard() {
     .order('created_at', { ascending: false })
     .limit(10)
 
-  // load settings (to read dashboard illustration url if available)
-  const { data: settingsData } = await supabase.from('settings').select('*').maybeSingle()
+  // (no dashboard illustration image required — design uses gradients and cards)
 
   return (
     <div className="space-y-8">
@@ -36,11 +35,7 @@ export default async function AdminDashboard() {
             <h1 className="text-3xl font-bold text-white">Ringkasan Toko</h1>
           </div>
           <div className="flex items-center gap-4">
-            <img
-              src={settingsData?.dashboard_illustration_url || settingsData?.hero_image_url || '/assets/admin-dashboard.png'}
-              alt="Ilustrasi dashboard"
-              className="hidden lg:block h-28 w-auto rounded-lg object-cover shadow-[0_10px_30px_rgba(34,211,238,0.08)]"
-            />
+            <div className="hidden lg:block h-28 w-40 rounded-lg bg-gradient-to-tr from-sky-600/10 to-violet-500/6 shadow-[0_10px_30px_rgba(34,211,238,0.04)]" aria-hidden />
             <div className="flex flex-wrap gap-3">
               <Link href="/admin/products" className="rounded-full bg-gradient-to-br from-slate-800/80 to-slate-700/70 px-4 py-2 text-sm font-semibold text-white transition hover:from-sky-500/80">
                 Produk
